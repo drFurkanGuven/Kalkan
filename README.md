@@ -59,7 +59,7 @@ Kurulduktan sonra menü çubuğunda 🛡️ kalkan simgesi belirir. Mac her aç�
 
 **İlk 24 saat** Kalkan ağını öğrenir ve bu sürede anomali uyarısı vermez — ama ARP izleme, port denetimi, engelleme, gizli mod ve ağ taraması ilk andan çalışır.
 
-> ⚠️ İmza uyarısını tamamen kaldırmak (çift tıkla-kur, hiç uyarı yok) için Apple Developer imzası + noter onayı gerekir (yıllık 99 $). Altyapı hazır; bkz. Yol Haritası.
+
 
 ---
 
