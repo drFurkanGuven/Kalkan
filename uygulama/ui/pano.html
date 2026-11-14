@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalkan · Geniş Görünüm</title>
+  <link rel="stylesheet" href="pano.css">
+</head>
+<body>
+  <header class="ust">
+    <div class="marka">
+      <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2.5 4 5.2v6.1c0 4.9 3.3 8.6 8 10.2 4.7-1.6 8-5.3 8-10.2V5.2z"/>
+        <path class="nabiz" d="M7.5 12h2.4l1.3-2.8 1.8 5.4 1.3-2.6h2.2"/>
+      </svg>
+      <div>
+        <strong>Kalkan</strong>
+        <span id="ust-alt">Geniş görünüm</span>
+      </div>
+    </div>
+    <div class="ust-sag">
+      <span id="rozet" class="rozet">…</span>
+      <span id="canli" class="canli"><i></i> canlı</span>
+    </div>
+  </header>
+
+  <main class="izgara">
+    <section class="kart sayilar" id="sayilar"></section>
+
+    <section class="kart grafikkutu">
+      <div class="kart-bas"><h2>Son 60 dakika</h2><span id="grafik-ozet"></span></div>
+      <svg id="grafik" viewBox="0 0 800 160" preserveAspectRatio="none"></svg>
+      <div class="grafik-eksen"><span>60 dk önce</span><span>30 dk</span><span>şimdi</span></div>
+    </section>
+
+    <section class="kart akiskutu">
+      <div class="kart-bas"><h2>Canlı bağlantılar</h2><span id="akis-ozet"></span></div>
+      <div id="akislar" class="liste"></div>
+    </section>
+
+    <section class="kart uyarikutu">
+      <div class="kart-bas"><h2>Uyarılar</h2><span id="uyari-ozet"></span></div>
+      <div id="uyarilar" class="liste"></div>
+    </section>
+
+    <section class="kart cihazkutu">
+      <div class="kart-bas"><h2>Yerel ağdaki cihazlar</h2><span id="cihaz-ozet"></span></div>
+      <div id="cihazlar" class="liste"></div>
+    </section>
+
+    <section class="kart gunlukkutu">
+      <div class="kart-bas">
+        <h2>Olay günlüğü</h2>
+        <div class="suzgec" id="gunluk-suzgec"></div>
+      </div>
+      <div id="gunluk" class="liste"></div>
+    </section>
+  </main>
+
+  <script src="ornek.js"></script>
+  <script src="pano.js"></script>
+</body>
+</html>

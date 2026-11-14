@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalkan — Mac için ağ güvenlik kalkanı</title>
+  <meta name="description" content="Mac'in için sessiz çalışan, öğrenen ağ güvenlik kalkanı. Ağını izler, alışılmadık trafiği yakalar, verini dışarı göndermez.">
+  <meta property="og:title" content="Kalkan — Mac için ağ güvenlik kalkanı">
+  <meta property="og:description" content="Öğrenen ağ izleme, anomali tespiti, engelleme ve zafiyet kontrolü. Tamamen yerel, gizliliğe saygılı.">
+  <meta property="og:type" content="website">
+  <style>
+    :root {
+      --zemin: #0e1217; --zemin2: #141a21; --kart: #1b222b; --metin: #eef1f4; --soluk: #9aa5b1;
+      --cizgi: #2a333d; --vurgu: #2bc4d4; --vurgu2: #15808f; --iyi: #3ec486; --uyari: #ff6b61; --orta: #f0a83c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--zemin); color: var(--metin); font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: var(--vurgu); text-decoration: none; }
+    .sar { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+    /* üst bar */
+    header { position: sticky; top: 0; z-index: 10; background: rgba(14,18,23,.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--cizgi); }
+    header .sar { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+    .logo svg { width: 28px; height: 28px; }
+    nav a { color: var(--soluk); margin-left: 22px; font-size: 14px; font-weight: 500; }
+    nav a:hover { color: var(--metin); }
+
+    /* hero */
+    .hero { text-align: center; padding: 96px 0 72px; background: radial-gradient(1200px 400px at 50% -80px, rgba(43,196,212,.14), transparent); }
+    .hero .rozet { display: inline-block; font-size: 13px; color: var(--vurgu); background: rgba(43,196,212,.12); border: 1px solid rgba(43,196,212,.3); padding: 5px 13px; border-radius: 99px; margin-bottom: 22px; }
+    .hero h1 { font-size: clamp(34px, 6vw, 58px); line-height: 1.08; letter-spacing: -.02em; margin-bottom: 18px; }
+    .hero h1 .alt { background: linear-gradient(90deg, var(--vurgu), var(--iyi)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p.ozet { font-size: clamp(16px, 2.4vw, 20px); color: var(--soluk); max-width: 620px; margin: 0 auto 34px; }
+    .dugmeler { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .dugme { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: 16px; padding: 14px 26px; border-radius: 12px; border: 1px solid transparent; transition: transform .12s, filter .12s; }
+    .dugme:hover { transform: translateY(-1px); }
+    .dugme.ana { background: linear-gradient(90deg, var(--vurgu), var(--vurgu2)); color: #04171a; }
+    .dugme.ana:hover { filter: brightness(1.08); }
+    .dugme.ikincil { background: var(--kart); color: var(--metin); border-color: var(--cizgi); }
+    .hero .kucuk { margin-top: 16px; font-size: 13px; color: var(--soluk); }
+
+    /* şerit rakamlar */
+    .serit { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--cizgi); border: 1px solid var(--cizgi); border-radius: 14px; overflow: hidden; margin: 8px 0 72px; }
+    .serit div { background: var(--zemin2); padding: 22px 16px; text-align: center; }
+    .serit b { display: block; font-size: 26px; color: var(--vurgu); letter-spacing: -.02em; }
+    .serit span { font-size: 13px; color: var(--soluk); }
+
+    /* bölümler */
+    section { padding: 40px 0; }
+    section h2 { font-size: clamp(24px, 4vw, 34px); text-align: center; margin-bottom: 12px; letter-spacing: -.02em; }
+    section .giris { text-align: center; color: var(--soluk); max-width: 560px; margin: 0 auto 44px; }
+
+    .ozellikler { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .ozellik { background: var(--kart); border: 1px solid var(--cizgi); border-radius: 14px; padding: 22px; }
+    .ozellik .im { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; background: rgba(43,196,212,.12); margin-bottom: 14px; }
+    .ozellik .im svg { width: 22px; height: 22px; stroke: var(--vurgu); }
+    .ozellik h3 { font-size: 16px; margin-bottom: 6px; }
+    .ozellik p { font-size: 14px; color: var(--soluk); }
+
+    /* kurulum adımları */
+    .adimlar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: a; }
+    .adim { background: var(--kart); border: 1px solid var(--cizgi); border-radius: 14px; padding: 24px; position: relative; }
+    .adim::before { counter-increment: a; content: counter(a); position: absolute; top: -14px; left: 22px; width: 32px; height: 32px; background: linear-gradient(90deg, var(--vurgu), var(--vurgu2)); color: #04171a; border-radius: 50%; display: grid; place-items: center; font-weight: 700; }
+    .adim h3 { font-size: 16px; margin: 10px 0 6px; }
+    .adim p { font-size: 14px; color: var(--soluk); }
+    .adim code { background: var(--zemin); padding: 1px 6px; border-radius: 5px; font-size: 13px; color: var(--metin); }
+    .not { text-align: center; color: var(--soluk); font-size: 14px; margin-top: 28px; }
+    .not strong { color: var(--orta); }
+
+    /* gizlilik */
+    .gizlilik { background: var(--zemin2); border: 1px solid var(--cizgi); border-radius: 16px; padding: 36px; text-align: center; }
+    .gizlilik .im { width: 54px; height: 54px; margin: 0 auto 16px; border-radius: 14px; display: grid; place-items: center; background: rgba(62,196,134,.14); }
+    .gizlilik .im svg { width: 28px; height: 28px; stroke: var(--iyi); }
+    .gizlilik p { color: var(--soluk); max-width: 620px; margin: 0 auto; }
+
+    footer { border-top: 1px solid var(--cizgi); padding: 32px 0; text-align: center; color: var(--soluk); font-size: 14px; margin-top: 40px; }
+
+    @media (max-width: 760px) {
+      .ozellikler, .adimlar { grid-template-columns: 1fr; }
+      .serit { grid-template-columns: repeat(2, 1fr); }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="sar">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2.5 4 5.2v6.1c0 4.9 3.3 8.6 8 10.2 4.7-1.6 8-5.3 8-10.2V5.2z" fill="#2bc4d4"/><path d="M7.5 12h2.4l1.3-2.8 1.8 5.4 1.3-2.6h2.2" fill="none" stroke="#04171a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Kalkan
+      </div>
+      <nav>
+        <a href="#ozellikler">Özellikler</a>
+        <a href="#kurulum">Kurulum</a>
+        <a href="#gizlilik">Gizlilik</a>
+        <a href="https://github.com/drFurkanGuven/Kalkan">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="sar">
+    <section class="hero">
+      <span class="rozet">● Tamamen yerel · verin dışarı çıkmaz</span>
+      <h1>Mac'in için sessiz çalışan<br><span class="alt">ağ güvenlik kalkanı</span></h1>
+      <p class="ozet">Kalkan ağını izler, neyin normal olduğunu öğrenir ve alışılmadık, şüpheli trafiği yakalar — bildiğin dille anlatır.</p>
+      <div class="dugmeler">
+        <a class="dugme ana" href="https://github.com/drFurkanGuven/Kalkan/releases/latest">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          .pkg indir (macOS)
+        </a>
+        <a class="dugme ikincil" href="https://github.com/drFurkanGuven/Kalkan">Kaynak kodu</a>
+      </div>
+      <p class="kucuk">macOS 11+ · Apple Silicon ve Intel · ~22 MB bellek</p>
+    </section>
+
+    <div class="serit">
+      <div><b>24 sa</b><span>öğrenip kendini eğitir</span></div>
+      <div><b>0</b><span>dışarı giden veri</span></div>
+      <div><b>%0,1</b><span>işlemci payı</span></div>
+      <div><b>Rust</b><span>ile yazıldı</span></div>
+    </div>
+
+    <section id="ozellikler">
+      <h2>Ne yapar?</h2>
+      <p class="giris">Kurumsal bir güvenlik ekibinin yaptıklarını, tek bir Mac uygulamasında, senin için.</p>
+      <div class="ozellikler">
+        <div class="ozellik"><div class="im"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div><h3>Öğrenen tespit</h3><p>Ağını öğrenir; alışılmadık bağlantıları, tarama ve veri sızıntısını kendi kendine yakalar.</p></div>
+        <div class="ozellik"><div class="im"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div><h3>Anlaşılır uyarılar</h3><p>IP değil isim: "Chrome → google.com". Bağlantıyı açan uygulamayı ve alan adını gösterir.</p></div>
+        <div class="ozellik"><div class="im"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c5 0 9 4.5 10 7a13 13 0 0 1-2.6 3.6M6.6 6.6C4.3 8 2.7 10.2 2 12c1 2.5 5 7 10 7 1.6 0 3.1-.4 4.4-1.1"/></svg></div><h3>Gizli mod</h3><p>Kalabalık ya da halka açık ağlarda seni görünmez yapar; tarama isteklerini sessizce düşürür.</p></div>
+        <div class="ozellik"><div class="im"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m5.7 5.7 12.6 12.6"/></svg></div><h3>Engelleme</h3><p>Şüpheli bir adresi tek tıkla engelle — 1 saat, 24 saat ya da kalıcı. Kendi adresin korunur.</p></div>
+        <div class="ozellik"><div class="im"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M5 16v-3h14v3M12 8v5"/></svg></div><h3>ARP izleme</h3><p>Ortadaki adam saldırısını (ARP sahteciliği) ve yerel ağ taramasını yakalar.</p></div>
+        <div class="ozellik"><div class="im"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4 5.2v6.1c0 4.9 3.3 8.6 8 10.2 4.7-1.6 8-5.3 8-10.2V5.2z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></div><h3>Zafiyet kontrolü</h3><p>Açık servislerin sürümünü CISA'nın aktif sömürülen açıklar listesiyle karşılaştırır.</p></div>
+      </div>
+    </section>
+
+    <section id="kurulum">
+      <h2>Kurulum</h2>
+      <p class="giris">Terminal gerekmez. Üç adımda hazır.</p>
+      <div class="adimlar">
+        <div class="adim"><h3>İndir</h3><p><a href="https://github.com/drFurkanGuven/Kalkan/releases/latest">Sürümler sayfasından</a> <code>Kalkan-Kurulum.pkg</code> dosyasını indir.</p></div>
+        <div class="adim"><h3>Aç</h3><p>Dosyaya <strong style="color:var(--metin)">sağ tıkla → Aç → Aç</strong>. (İmzasız paket; yalnızca ilk sefer.)</p></div>
+        <div class="adim"><h3>Kur</h3><p>Yükleyicide <code>İleri → Kur</code>, Mac şifreni gir. Menü çubuğunda 🛡️ belirir.</p></div>
+      </div>
+      <p class="not">İlk <strong>24 saat</strong> Kalkan ağını öğrenir; bu sürede uyarı vermez ama koruma (ARP, port, gizli mod, engelleme) ilk andan çalışır.</p>
+    </section>
+
+    <section id="gizlilik">
+      <div class="gizlilik">
+        <div class="im"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4 5.2v6.1c0 4.9 3.3 8.6 8 10.2 4.7-1.6 8-5.3 8-10.2V5.2z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></div>
+        <h2>Gizliliğin senindir</h2>
+        <p>Kalkan hiçbir trafiğini, alan adını ya da uyarını dışarı göndermez. Her şey senin Mac'inde kalır. Dışarıya tek erişim, senin başlattığın liste güncellemeleridir — ve onlar da hiçbir bilgini göndermez, yalnızca genel listeleri indirir.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="sar">
+      Rust ❤️ ile yapıldı · <a href="https://github.com/drFurkanGuven/Kalkan">GitHub</a> · Gizliliğine saygılı ağ güvenliği
+    </div>
+  </footer>
+</body>
+</html>

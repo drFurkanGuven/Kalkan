@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Panel penceresinin izinleri",
+  "windows": ["panel", "pano"],
+  "permissions": ["core:default", "notification:default"]
+}

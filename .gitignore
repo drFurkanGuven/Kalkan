@@ -1,0 +1,28 @@
+# Rust derleme çıktıları
+/target
+**/target
+
+# Tauri / Node
+uygulama/node_modules
+uygulama/src-tauri/gen
+uygulama/src-tauri/target
+
+# Dağıtım paketleri (GitHub Releases'e yüklenir, depoya değil)
+*.pkg
+*.dmg
+uygulama/src-tauri/icons/icon.icns
+
+# İndirilebilen veri dosyaları (betiklerle çekilir: oui_guncelle.sh / zafiyet_guncelle.sh)
+veri/oui.csv
+veri/kev.json
+
+# Çalışma zamanı dosyaları (test kalıntıları)
+*.db
+*.db-wal
+*.db-shm
+model.json
+*.sock
+
+# macOS
+.DS_Store
+._*

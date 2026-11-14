@@ -1,0 +1,13 @@
+{
+  "name": "kalkan-uygulama",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "tauri": "tauri",
+    "gelistir": "tauri dev",
+    "paketle": "tauri build --bundles app"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.12.4"
+  }
+}

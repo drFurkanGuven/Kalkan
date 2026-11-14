@@ -1,0 +1,17 @@
+[package]
+name = "kalkan-servis"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+libproc = "0.15"
+anyhow = "1.0.104"
+cekirdek = { version = "0.1.0", path = "../cekirdek" }
+chrono = "0.4.45"
+clap = { version = "4.6.7", features = ["derive"] }
+ctrlc = { version = "3.5.2", features = ["termination"] }
+pcap = "2.5.0"
+pcap-file = "3.0.0"
+rusqlite = { version = "0.42.0", features = ["bundled"] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
